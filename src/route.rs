@@ -5,10 +5,14 @@ use axum::{
     Router,
 };
 
-use crate::{handler::get_pal_handler, AppState};
+use crate::{
+    handler::{breeding_calc_handler, get_pal_handler},
+    AppState,
+};
 
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
-        .route("/api/pals/:id", get(get_pal_handler))
+        .route("/api/pals/:name", get(get_pal_handler))
+        .route("/api/pals/breeding_calc", post(breeding_calc_handler))
         .with_state(app_state)
 }

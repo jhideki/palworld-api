@@ -1,7 +1,16 @@
-use axum::{response::IntoResponse, routing::get, Json, Router};
+mod handler;
+mod model;
+mod route;
+use axum::http::{
+    header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE},
+    HeaderValue, Method,
+};
+mod body_schema;
 use dotenv::dotenv;
+use route::create_router;
 use sqlx::postgres::{PgPool, PgPoolOptions};
 use std::sync::Arc;
+use tower_http::cors::CorsLayer;
 
 pub struct AppState {
     db: PgPool,
@@ -26,19 +35,14 @@ async fn main() {
         }
     };
 
-    let app = Router::new()
-        .route("/palworldapi", get(palworld_halndler))
-        .with_state(Arc::new(AppState { db: pool.clone() }));
+    let cors = CorsLayer::new()
+        .allow_origin("http://localhost:3000".parse::<HeaderValue>().unwrap())
+        .allow_methods([Method::GET])
+        .allow_credentials(true)
+        .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
+
+    let app = create_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
     println!("Server started");
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
-    axum::serve(listener, app).await.unwrap()
-}
-
-async fn palworld_halndler() -> impl IntoResponse {
-    const MESSAGE: &str = "Rust palworld API";
-    let json_response = serde_json::json!({
-    "status": "success",
-    "message":MESSAGE
-    });
-    Json(json_response)
+    axum::serve(listener, app).await.unwrap();
 }
