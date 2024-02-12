@@ -50,6 +50,16 @@ pub async fn breeding_calc_handler(
     State(data): State<Arc<AppState>>,
     Json(body): Json<BreedData>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    if let Some(child) = &data
+        .breed_exceptions
+        .parents_exist((&body.father, &body.mother))
+    {
+        let response = serde_json::json!({"status": "success","data": serde_json::json!({
+                    "pal":child
+        })});
+        return Ok(Json(response));
+    }
+
     let pal_breeding_record = sqlx::query_as::<_, PalBreeding>(
         r#"SELECT * FROM public.pal_breeding ORDER BY ABS(breeding_power -
         (SELECT CAST ( FLOOR(AVG(breeding_power)) AS INT4) FROM public.pal_breeding WHERE name = $1 OR name = $1)) LIMIT 1;"#,

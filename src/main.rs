@@ -1,3 +1,4 @@
+mod exceptions;
 mod handler;
 mod model;
 mod route;
@@ -7,6 +8,7 @@ use axum::http::{
 };
 mod body_schema;
 use dotenv::dotenv;
+use exceptions::ExceptionMap;
 use route::create_router;
 use sqlx::postgres::{PgPool, PgPoolOptions};
 use std::sync::Arc;
@@ -14,6 +16,7 @@ use tower_http::cors::CorsLayer;
 
 pub struct AppState {
     db: PgPool,
+    breed_exceptions: ExceptionMap,
 }
 
 #[tokio::main]
@@ -40,8 +43,14 @@ async fn main() {
         .allow_methods([Method::GET])
         .allow_credentials(true)
         .allow_headers([AUTHORIZATION, ACCEPT, CONTENT_TYPE]);
+    let exception_map = ExceptionMap::new();
 
-    let app = create_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
+    let app = create_router(Arc::new(AppState {
+        db: pool.clone(),
+        breed_exceptions: exception_map,
+    }))
+    .layer(cors);
+
     println!("Server started");
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
