@@ -1,16 +1,15 @@
-# Use a Rust base image
-FROM rust:latest
+# Use a Rust base image for building
+FROM rust:latest 
 
-# Set the working directory inside the container
-WORKDIR /usr/src/palworld-api
+WORKDIR /app/palworld-api
 
-# Copy the dependency manifest
-COPY Cargo.toml Cargo.lock ./
+# Copy project files
 COPY . .
-COPY .env . 
 
-# Build the application
+# Build the application with static linking
 RUN cargo build --release
 
-# Specify the command to run your application
 CMD ["target/release/palworld-api"]
+
+# Expose port if needed
+EXPOSE 8000

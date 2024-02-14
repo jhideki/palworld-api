@@ -58,6 +58,14 @@ pub async fn breeding_calc_handler(
                     "pal":child
         })});
         return Ok(Json(response));
+    } else if let Some(child) = &data
+        .breed_exceptions
+        .parents_exist((&body.mother, &body.father))
+    {
+        let response = serde_json::json!({"status": "success","data": serde_json::json!({
+                    "pal":child
+        })});
+        return Ok(Json(response));
     }
 
     let pal_breeding_record = sqlx::query_as::<_, PalBreeding>(
