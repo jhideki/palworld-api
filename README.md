@@ -74,7 +74,7 @@ Current parameters include the following:
 }
 ```
 ### POST api/pals/breeding_calc
-# Body
+#### Body
 ```json
 {
 "father": "Lamball",
