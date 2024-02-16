@@ -12,8 +12,7 @@ use crate::{
     AppState,
 };
 use serde_json::json;
-
-pub async fn get_pal_handler(
+pub async fn get_pal_basic(
     Path(name): Path<String>,
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
@@ -26,7 +25,10 @@ pub async fn get_pal_handler(
     match pals_basic_record {
         Ok(pal) => {
             let pal_response = serde_json::json!({"status": "success","data": serde_json::json!({
-                        "pal": filter_db_record(&pal).name
+                        "pal": filter_db_record(&pal).name,
+                        "id": filter_db_record(&pal).id,
+                        "wiki": filter_db_record(&pal).wiki,
+                        "image": filter_db_record(&pal).image_wiki
             })});
             return Ok(Json(pal_response));
         }
@@ -46,7 +48,7 @@ pub async fn get_pal_handler(
     };
 }
 
-pub async fn breeding_calc_handler(
+pub async fn breeding_calc(
     State(data): State<Arc<AppState>>,
     Json(body): Json<BreedData>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {

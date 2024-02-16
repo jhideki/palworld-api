@@ -1,5 +1,11 @@
+mod handlers {
+    pub mod basic;
+    pub mod pal_drops;
+    pub mod pal_info;
+    pub mod pal_skills;
+    pub mod pal_suitabilities;
+}
 mod exceptions;
-mod handler;
 mod model;
 mod route;
 use axum::http::{
@@ -29,7 +35,7 @@ async fn main() {
         .await
     {
         Ok(pool) => {
-            println!("Connection succeeded");
+            println!("DB connection succeeded");
             pool
         }
         Err(err) => {
