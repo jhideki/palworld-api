@@ -20,7 +20,7 @@ The API uses API key authentication. To authenticate your requests, include your
 
 ## Rate Limits
 
-There are no rate limits enforced by the API.
+100 requests per day. Might change this later.
 
 ## Example Usage
 
