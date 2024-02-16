@@ -121,6 +121,10 @@ Current parameters include the following:
 ```
 ## Contribution
 
+### Setting up
+You will need to manually migrate the data found in 'data' into a postgress DB. The table names are the same as the file names. 
+
+
 Please follow these steps
 
 1. Fork the repository.
