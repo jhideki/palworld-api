@@ -12,7 +12,7 @@ To start using the API, follow these steps:
 
 ## Endpoints
 
-Please visit [RapidAPI]([https://rapidapi.com](https://rapidapi.com/philmckracken03/api/palworld-api1)) for usage.
+Please visit [RapidAPI](https://rapidapi.com/philmckracken03/api/palworld-api1) for usage.
 
 ## Authentication
 
