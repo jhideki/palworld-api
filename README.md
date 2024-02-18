@@ -123,15 +123,40 @@ Current parameters include the following:
 
 ### Setting up
 You will need to manually migrate the data found in [data](data) into a postgress DB. The table names are the same as the file names. 
+Put your db instance url in a .env file in the root directory of the project.
+```
+palworld-api
+|
+├── .env
+├── .git
+├── .gitignore
+├── Cargo.lock
+├── Cargo.toml
+├── Dockerfile
+├── data
+├── src
+└── target
+```
+The variable should be set up as follows.
+```dotenv
+DATABASE_URL=[your database url]
+```
+### Building and testing the project
+To build the project just run:
+```bash
+Cargo run
+```
+You can thest endpoints via curl or postman
+```bash
+curl https://palworld-api-4usnupyt3a-uc.a.run.app/api/pal_info/Lamball
+```
 
 ### PRs
 Please follow these steps
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
-3. Make your changes and ensure they are properly tested.
-4. Commit your changes with descriptive commit messages.
-5. Push your changes to your fork.
-6. Submit a pull request to main
+3. Make your changes and create PR
+4. I'll review the PR and once it gets merged an automatic build will start and deploy to google cloud
 
 
