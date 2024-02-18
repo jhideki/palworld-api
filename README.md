@@ -148,7 +148,7 @@ Cargo run
 ```
 You can thest endpoints via curl or postman
 ```bash
-curl https://palworld-api-4usnupyt3a-uc.a.run.app/api/pal_info/Lamball
+curl localhost:8000/api/pal_suitabilities/Lamball
 ```
 
 ### PRs
