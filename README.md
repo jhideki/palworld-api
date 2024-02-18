@@ -144,7 +144,7 @@ DATABASE_URL=[your database url]
 ### Building and testing the project
 To build the project just run:
 ```bash
-Cargo run
+cargo run
 ```
 You can thest endpoints via curl or postman
 ```bash
@@ -154,9 +154,8 @@ curl localhost:8000/api/pal_suitabilities/Lamball
 ### PRs
 Please follow these steps
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and create PR
-4. I'll review the PR and once it gets merged an automatic build will start and deploy to google cloud
+1. Create a new branch for your feature or bug fix.
+2. Make your changes and create PR
+3. I'll review the PR and once it gets merged an automatic build will start and deploy to google cloud
 
 
